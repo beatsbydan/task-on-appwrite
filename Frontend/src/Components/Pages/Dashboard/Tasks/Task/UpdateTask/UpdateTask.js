@@ -10,23 +10,57 @@ import DeleteModal from './DeleteModal/DeleteModal';
 import React from 'react'
 const UpdateTask = () => {
     const token = localStorage.getItem('myToken')
+    const editTask_api = 'https://task-on-production.up.railway.app/api/tasks/'
     const ctx = useContext(UpdateTaskContext)
     const navigate = useNavigate()
     const [updateTaskErrors, setUpdateTaskErrors] = useState({})
     const [readyToDelete, setReadyToDelete] = useState(false)
     const {id} = useParams()
+    
     useEffect(()=>{
-        ctx.getTask(id)
+        const getMyTask = async () =>{ 
+            await axios.get(editTask_api + id,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(res=>{
+                const taskData = res.data.data
+                setFormData({
+                    title: taskData.title,
+                    description:taskData.description,
+                    deadline: taskData.deadline.substr(0,10)
+                })
+            })
+            .catch(err=>{
+                console.log(err)
+                return;
+            })
+        }
+        getMyTask()
     },[])
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        deadline: ''
+    })
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setFormData(prev=>{
+            return(
+                {...prev, [name]:value}
+            )
+        })
+    }
     const handleSubmit = async (e) => {
         e.preventDefault()
         const updateData = {
-            title:ctx.formData.title,
-            description:ctx.formData.description,
-            deadline:ctx.formData.deadline,
+            title:formData.title,
+            description:formData.description,
+            deadline:formData.deadline,
             status: ctx.status
         }
-        const formErrors = ValidateUpdateTask(ctx.formData)
+        const formErrors = ValidateUpdateTask(updateData)
         setUpdateTaskErrors(formErrors)
         if(formErrors.all === ""){
             await axios.patch((ctx.update_api + id), {...updateData},{
@@ -75,21 +109,21 @@ const UpdateTask = () => {
                                             Title
                                             <small>{updateTaskErrors.title}</small>
                                         </label>
-                                        <input type="text" className={updateTaskErrors.title ? 'error': ''} name='title' onChange={ctx.handleChange} value={ctx.formData.title}/>
+                                        <input type="text" className={updateTaskErrors.title ? 'error': ''} name='title' onChange={handleChange} value={formData.title}/>
                                     </div>
                                     <div className="formElement">
                                         <label htmlFor="description">
                                             Description
                                             <small>{updateTaskErrors.description}</small>
                                         </label>
-                                        <textarea name="description" className={updateTaskErrors.description ? 'error': ''} id="" cols="30" rows="10" onChange={ctx.handleChange} value={ctx.formData.description}></textarea>
+                                        <textarea name="description" className={updateTaskErrors.description ? 'error': ''} id="" cols="30" rows="10" onChange={handleChange} value={formData.description}></textarea>
                                     </div>
                                     <div className="formElement">
                                         <label htmlFor="date">
                                             Deadline
                                             <small>{updateTaskErrors.deadline}</small>
                                         </label>
-                                        <input type="date" name='deadline' className={updateTaskErrors.deadline ? 'error': ''} onChange={ctx.handleChange} value={ctx.formData.deadline} />
+                                        <input type="date" name='deadline' className={updateTaskErrors.deadline ? 'error': ''} onChange={handleChange} value={formData.deadline} />
                                     </div>
                                     <div className="formActions">
                                         <div className="updateActions">

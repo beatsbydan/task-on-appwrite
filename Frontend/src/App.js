@@ -34,9 +34,9 @@ function App() {
                   <CreateCategoryContextProvider>
                     <ProfileContextProvider>
                       <div className="App"> 
-                        <Router>
+                        {/* <Router> */}
                           <Routes>
-                            <Route path='/' element={<Home/>}/>
+                            <Route exact path='/' element={<Home/>}/>
                             <Route path='/signup' element={<SignUp/>}/>
                             <Route path='/login' element={<LogIn/>}/>
                             <Route path='/forgot' element={<ForgotPassword/>}/>
@@ -50,7 +50,7 @@ function App() {
                             <Route path='/success' element={<SignUpSuccess/>}/>
                             <Route path='/logout' element={<LogOut/>}/>
                           </Routes>
-                        </Router>
+                        {/* </Router> */}
                       </div>
                     </ProfileContextProvider>
                   </CreateCategoryContextProvider>

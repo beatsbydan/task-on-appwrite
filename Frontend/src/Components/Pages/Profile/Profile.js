@@ -8,6 +8,7 @@ import ValidateProfile from './ValidateProfile';
 const Profile = () => {
     const token = localStorage.getItem('myToken')
     const user = JSON.parse(localStorage.getItem('user'))
+    const myId = localStorage.getItem('myId')
     const uploadUrl = 'https://task-on-production.up.railway.app/users/update-profile/'
     const [myImage, setMyImage] = useState('')
     const [error, setError] = useState({})
@@ -18,10 +19,9 @@ const Profile = () => {
         const fileError = ValidateProfile(myImage.name)
         setError(fileError)
         if(fileError.all === ""){
-            const image = {
-                image: myImage
-            }
-            axios.post((uploadUrl + user.id, {...image}, {
+            const image = myImage
+            
+            axios.patch(uploadUrl + myId, {image}, {
                 headers : {
                     'Authorization': `Bearer ${token}`
                 }
@@ -31,7 +31,7 @@ const Profile = () => {
             })
             .catch(err=>{
                 console.log(err)
-            }))
+            })
             console.log('Valid')
         }
     }
