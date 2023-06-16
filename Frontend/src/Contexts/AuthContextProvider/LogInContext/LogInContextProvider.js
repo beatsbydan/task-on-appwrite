@@ -24,7 +24,8 @@ const LogInContextProvider = (props) => {
         setLogInErrors(formErrors)
         if(formErrors.all === ""){
             await axios.post(logIn_api, {...formData})
-            .then(async res=>{
+            .then(res=>{
+                console.log(res)
                 if(res.status === 200){
                     setFormData({
                         email: '',
@@ -33,19 +34,23 @@ const LogInContextProvider = (props) => {
                     localStorage.setItem('myToken', res.data.data.token)
                     localStorage.setItem('myId', res.data.data.user.$id)
                     success.logInSuccess = true
-                    await axios.get(user_api + res.data.data.user.$id, {
+                    axios.get(user_api + res.data.data.user.$id, {
                         headers: {
                             'Authorization': `Bearer ${res.data.data.token}`
                         }
                     })
                     .then(res=>{
+                        console.log(res)
                         if(res.status === 200){
-                            const myData = res.data.data
+                            const myData = res.data.data.user
+                            console.log(myData)
                             const userData = {
                                 email:myData.email,
                                 firstname: myData.firstname,
-                                lastname:myData.lastname
+                                lastname:myData.lastname,
+                                profileImage: myData.profile_image
                             }
+                            console.log(userData)
                             localStorage.setItem('user', JSON.stringify(userData))
                         }
                         else{
@@ -54,12 +59,16 @@ const LogInContextProvider = (props) => {
                             success.logInSuccess = false
                         }
                     })
+                    .catch(error=>{
+                        console.log(error)
+                    })
                 }
                 if(res.status === 401){
                     success.logInSuccess = false
                 }
             })
             .catch(error=>{
+                console.log(error)
                 if(error.code === "ERR_NETWORK"){
                     success.logInSuccess = null
                 }

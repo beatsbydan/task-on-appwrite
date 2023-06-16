@@ -17,7 +17,8 @@ const ProfileContextProvider = (props) => {
                 setUserData({
                     email:myData.email,
                     firstname: myData.firstname,
-                    lastname:myData.lastname
+                    lastname:myData.lastname,
+                    prfileImage: myData.profile_image
                 })
             }
             else{

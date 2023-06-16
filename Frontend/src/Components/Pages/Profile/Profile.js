@@ -9,7 +9,7 @@ const Profile = () => {
     const token = localStorage.getItem('myToken')
     const user = JSON.parse(localStorage.getItem('user'))
     const myId = localStorage.getItem('myId')
-    const uploadUrl = 'https://task-on-production.up.railway.app/users/update-profile/'
+    const uploadUrl = 'https://task-on-production.up.railway.app/api/users/update-profile/'
     const [myImage, setMyImage] = useState('')
     const [error, setError] = useState({})
     const handleImage = (e) => {
@@ -17,17 +17,24 @@ const Profile = () => {
     }
     const handleUpload = async () =>{
         const fileError = ValidateProfile(myImage.name)
+        console.log(uploadUrl + myId)
         setError(fileError)
         if(fileError.all === ""){
-            const image = myImage
-            
-            axios.patch(uploadUrl + myId, {image}, {
+            const data = {
+                profile_image: myImage,
+                firstname: user.firstname
+            }
+            console.log(data)
+            axios.patch(uploadUrl + myId, {...data}, {
                 headers : {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data"
                 }
             })
             .then(res=>{
-                console.log(res)
+                console.log(res.data.data.profile_image)
+                console.log(typeof(res.data.data.profile_image))
+                localStorage.setItem('profileImage', res.data.data.profile_image )
             })
             .catch(err=>{
                 console.log(err)

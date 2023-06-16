@@ -3,13 +3,16 @@ import './Navbar.css'
 import {RxHamburgerMenu} from 'react-icons/rx'
 import {TfiClose} from 'react-icons/tfi'
 import {BsPersonFillCheck} from 'react-icons/bs'
-import { useRef, useState, useContext } from 'react';
+import { useRef, useState, useContext, useEffect } from 'react';
 import ProfileContext from '../../../Contexts/ProfileContextProvider/ProfileContext';
 const Navbar = () => {
     const myId = localStorage.getItem('myId')
     const ctx = useContext(ProfileContext)
     const navRef = useRef()
     const [navDisplay, setNavDisplay] = useState(false)
+    useEffect(()=>{
+        ctx.getUser(myId)
+    },[])
     const handleNavDisplay = () => {
         setNavDisplay(!navDisplay)
         navRef.current.classList.toggle('responsive_nav')
