@@ -33,7 +33,7 @@ const CreateTaskContextProvider = (props) => {
                 return
             }
         })
-    },[open, user.myToken])
+    },[open])
     const handleChange = (e) => {
         const {name, value} = e.target
         setFormData(prev=>{
