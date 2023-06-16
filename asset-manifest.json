@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/task-on-appwrite/static/css/main.719c3d89.css",
-    "main.js": "/task-on-appwrite/static/js/main.3a16ae98.js",
+    "main.js": "/task-on-appwrite/static/js/main.a033c4b8.js",
     "static/media/log-in-bg.jpg": "/task-on-appwrite/static/media/log-in-bg.fc84b49218f50ec42f73.jpg",
     "static/media/reset-passowrd-bg.jpg": "/task-on-appwrite/static/media/reset-passowrd-bg.86319565f9f808bf4778.jpg",
     "static/media/sign-up-bg.jpg": "/task-on-appwrite/static/media/sign-up-bg.1e3382b9f751bdd7a709.jpg",
@@ -10,10 +10,10 @@
     "static/media/vector-5.jpg": "/task-on-appwrite/static/media/vector-5.d2e3c64c0db67c83f69a.jpg",
     "index.html": "/task-on-appwrite/index.html",
     "main.719c3d89.css.map": "/task-on-appwrite/static/css/main.719c3d89.css.map",
-    "main.3a16ae98.js.map": "/task-on-appwrite/static/js/main.3a16ae98.js.map"
+    "main.a033c4b8.js.map": "/task-on-appwrite/static/js/main.a033c4b8.js.map"
   },
   "entrypoints": [
     "static/css/main.719c3d89.css",
-    "static/js/main.3a16ae98.js"
+    "static/js/main.a033c4b8.js"
   ]
 }
