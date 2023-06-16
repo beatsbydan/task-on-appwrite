@@ -9,7 +9,7 @@ const DashBoard = () => {
             <section className='dashboard'>
                 <Header/>
                 <div className="intro">
-                    {/* <h1>Welcome <span>{user.firstname}</span>!</h1> */}
+                    <h1>Welcome <span>{user.firstname}</span>!</h1>
                     <p> 
                         Create categories to help structure your 
                         <span><span className='taskText'>TASKS</span> and <span className='schedules'>SCHEDULES</span>!</span>

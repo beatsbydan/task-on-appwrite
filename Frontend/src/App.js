@@ -1,6 +1,6 @@
 import './App.css';
 import Home from './Components/Pages/Home/Home';
-import { BrowserRouter as Router, Route, Routes, HashRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import LogIn from './Components/Pages/Authentication/LogIn/LogIn';
 import SignUp from './Components/Pages/Authentication/SignUp/SignUp';
 import ForgotPassword from './Components/Pages/Authentication/ForgotPassword/ForgotPassword';
@@ -33,27 +33,23 @@ function App() {
                 <UpdateTaskContextProvider>
                   <CreateCategoryContextProvider>
                     <ProfileContextProvider>
-                      <Router>
-                        <HashRouter basename='/'>
-                          <div className="App"> 
-                              <Routes>
-                                <Route exact path='/' element={<Home/>}/>
-                                <Route path='/signup' element={<SignUp/>}/>
-                                <Route path='/login' element={<LogIn/>}/>
-                                <Route path='/forgot' element={<ForgotPassword/>}/>
-                                <Route path='/reset' element={<ResetPassword/>}/>
-                                <Route path='/create' element={<CreateTask/>}/>
-                                <Route path='/dashboard' element={<DashBoard/>}/>
-                                <Route path='/profile' element={<Profile/>}/>
-                                <Route path='/confirmEmail' element={<ConfirmEmail/>}/>
-                                <Route path='/confirmReset' element={<ConfirmForgotPassword/>}/>
-                                <Route path='/tasks/:id' element={<UpdateTask/>}/>
-                                <Route path='/success' element={<SignUpSuccess/>}/>
-                                <Route path='/logout' element={<LogOut/>}/>
-                              </Routes>
-                          </div>
-                          </HashRouter>
-                      </Router>
+                      <div className="App"> 
+                          <Routes>
+                            <Route exact path='/' element={<Home/>}/>
+                            <Route path='/signup' element={<SignUp/>}/>
+                            <Route path='/login' element={<LogIn/>}/>
+                            <Route path='/forgot' element={<ForgotPassword/>}/>
+                            <Route path='/reset' element={<ResetPassword/>}/>
+                            <Route path='/create' element={<CreateTask/>}/>
+                            <Route path='/dashboard' element={<DashBoard/>}/>
+                            <Route path='/profile' element={<Profile/>}/>
+                            <Route path='/confirmEmail' element={<ConfirmEmail/>}/>
+                            <Route path='/confirmReset' element={<ConfirmForgotPassword/>}/>
+                            <Route path='/tasks/:id' element={<UpdateTask/>}/>
+                            <Route path='/success' element={<SignUpSuccess/>}/>
+                            <Route path='/logout' element={<LogOut/>}/>
+                          </Routes>
+                      </div>
                     </ProfileContextProvider>
                   </CreateCategoryContextProvider>
                 </UpdateTaskContextProvider>

@@ -10,9 +10,9 @@ const Navbar = () => {
     const ctx = useContext(ProfileContext)
     const navRef = useRef()
     const [navDisplay, setNavDisplay] = useState(false)
-    useEffect(()=>{
-        ctx.getUser(myId)
-    },[])
+    // useEffect(()=>{
+    //     ctx.getUser(myId)
+    // },[])
     const handleNavDisplay = () => {
         setNavDisplay(!navDisplay)
         navRef.current.classList.toggle('responsive_nav')
