@@ -1,9 +1,16 @@
 import Header from '../../Header/Header';
 import './DashBoard.css'
+import {useContext, useEffect} from 'react'
 import Tasks from './Tasks/Tasks';
 import React from 'react'
+import ProfileContext from '../../../Contexts/ProfileContextProvider/ProfileContext'
 const DashBoard = () => {
     const user = JSON.parse(localStorage.getItem('user'))
+    const ctx = useContext(ProfileContext)
+    useEffect(()=>{
+        ctx.getUser(user.myId)
+    },[])
+    
     return ( 
         <React.Fragment>
             <section className='dashboard'>

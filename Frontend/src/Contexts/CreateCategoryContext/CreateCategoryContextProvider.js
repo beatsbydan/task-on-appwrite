@@ -4,7 +4,7 @@ import ValidateCreateCategory from "../../Components/Pages/Create/CreateCategory
 import CreateCategoryContext from "./CreateCategoryContext";
 
 const CreateCategoryContextProvider = (props) => {
-    const token = localStorage.getItem('myToken')
+    const user = JSON.parse(localStorage.getItem('user'))
     const category_api = 'https://task-on-production.up.railway.app/api/categories'
     const [formData, setFormData] = useState({
         category: ''
@@ -31,7 +31,7 @@ const CreateCategoryContextProvider = (props) => {
         if(formErrors.all === ""){
             await axios.post(category_api, {...categoryData},{
                 headers: { 
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${user.myToken}`
                 }
             })
             .then(res=>{

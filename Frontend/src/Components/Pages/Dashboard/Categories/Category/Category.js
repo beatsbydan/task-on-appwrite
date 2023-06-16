@@ -5,7 +5,7 @@ import DeleteModal from '../../Tasks/Task/UpdateTask/DeleteModal/DeleteModal'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 const Category = (props) => {
-    const token = localStorage.getItem('myToken')
+    const user = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate()
     const categories_api = 'https://task-on-production.up.railway.app/api/categories/'
     const [readyToDelete, setReadyToDelete] = useState(false)
@@ -15,7 +15,7 @@ const Category = (props) => {
     const handleDelete = () =>{
         axios.delete(categories_api + props.category.$id, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user.myToken}`
             }
         })
         .then(res=>{

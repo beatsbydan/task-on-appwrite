@@ -11,7 +11,6 @@ const LogInContextProvider = (props) => {
     const handleVisibility = () => {
         setVisible(!visible)
     }
-    // const user_api = 'https://task-on-production.up.railway.app/api/users/'
     const logIn_api = 'https://task-on-production.up.railway.app/api/auth/login'
     const [logInErrors, setLogInErrors] = useState({})
     const handleSubmit = async () => {
@@ -25,53 +24,28 @@ const LogInContextProvider = (props) => {
         if(formErrors.all === ""){
             await axios.post(logIn_api, {...formData})
             .then(res=>{
-                console.log(res)
                 if(res.status === 200){
                     setFormData({
                         email: '',
                         password: ''
                     })
+                    success.logInSuccess = true
                     const myData = res.data.data
-                    console.log(myData)
                     const userData = {
-                        email:myData.email,
-                        firstname: myData.firstname,
-                        lastname:myData.lastname,
-                        profileImage: myData.profile_image,
+                        email:myData.user.email,
+                        firstname: myData.user.firstname,
+                        lastname:myData.user.lastname,
+                        profileImage: myData.user.profile_image,
                         myToken: myData.token,
                         myId: myData.user.$id
                     }
-                    console.log(userData)
                     localStorage.setItem('user', JSON.stringify(userData))
-                    localStorage.setItem('myToken', res.data.data.token)
-                    localStorage.setItem('myId', res.data.data.user.$id)
-                    success.logInSuccess = true
-                    // axios.get(user_api + res.data.data.user.$id, {
-                    //     headers: {
-                    //         'Authorization': `Bearer ${res.data.data.token}`
-                    //     }
-                    // })
-                    // .then(res=>{
-                    //     console.log(res)
-                    //     if(res.status === 200){
-                            
-                    //     }
-                    //     else{
-                    //         alert('SOMETHING WENT WRONG')
-                    //         localStorage.clear()
-                    //         success.logInSuccess = false
-                    //     }
-                    // })
-                    // .catch(error=>{
-                    //     console.log(error)
-                    // })
                 }
                 if(res.status === 401){
                     success.logInSuccess = false
                 }
             })
             .catch(error=>{
-                console.log(error)
                 if(error.code === "ERR_NETWORK"){
                     success.logInSuccess = null
                 }

@@ -3,16 +3,11 @@ import './Navbar.css'
 import {RxHamburgerMenu} from 'react-icons/rx'
 import {TfiClose} from 'react-icons/tfi'
 import {BsPersonFillCheck} from 'react-icons/bs'
-import { useRef, useState, useContext, useEffect } from 'react';
-import ProfileContext from '../../../Contexts/ProfileContextProvider/ProfileContext';
+import { useRef, useState } from 'react';
 const Navbar = () => {
-    const myId = localStorage.getItem('myId')
-    const ctx = useContext(ProfileContext)
+    const user = JSON.parse(localStorage.getItem('user'))
     const navRef = useRef()
     const [navDisplay, setNavDisplay] = useState(false)
-    // useEffect(()=>{
-    //     ctx.getUser(myId)
-    // },[])
     const handleNavDisplay = () => {
         setNavDisplay(!navDisplay)
         navRef.current.classList.toggle('responsive_nav')
@@ -33,7 +28,7 @@ const Navbar = () => {
                         <li><Link onClick={clear} to={'/logout'}>Logout</Link></li>
                         <li>
                             <div className='profile'>
-                                <Link to={`/profile`}>{<BsPersonFillCheck size={30}/>}</Link>
+                                <Link to={`/profile`}>{user.profileImage === null ? <BsPersonFillCheck size={30}/> : <img src={user.profileImage} alt =''/>}</Link>
                             </div>
                         </li>
                     </ul>

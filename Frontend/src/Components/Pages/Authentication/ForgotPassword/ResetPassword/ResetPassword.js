@@ -12,10 +12,6 @@ const ResetPassword = () => {
             if(res.resetSuccess){
                 navigate('/success')
             }
-            else{
-                alert('SOMETHING WENT WRONG!')
-                navigate('/forgot')
-            }
         })
     }
     return ( 

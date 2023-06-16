@@ -3,7 +3,7 @@ import { useState} from "react";
 import UpdateTaskContext from "./UpdateTaskContext";
 
 const UpdateTaskContextProvider = (props) => {
-    const token = localStorage.getItem('myToken')
+    const user = JSON.parse(localStorage.getItem('user'))
     const editTask_api = 'https://task-on-production.up.railway.app/api/tasks/'
     const [status, setStatus] = useState('PENDING')
     const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const UpdateTaskContextProvider = (props) => {
     const getTask = async (id) =>{ 
         await axios.get(editTask_api + id,{
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user.myToken}`
             }
         })
         .then(res=>{
@@ -48,7 +48,7 @@ const UpdateTaskContextProvider = (props) => {
         let success = {}
         await axios.delete(editTask_api + id, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user.myToken}`
             }
         })
         .then(res=>{

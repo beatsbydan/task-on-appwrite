@@ -6,7 +6,7 @@ import './Tasks.css'
 import Categories from '../Categories/Categories.js';
 import { useNavigate } from 'react-router-dom';
 const Tasks = () => {
-    const token = localStorage.getItem('myToken')
+    const user = JSON.parse(localStorage.getItem('user'))
     const categories_api = 'https://task-on-production.up.railway.app/api/categories'
     const categoryTasks_api = 'https://task-on-production.up.railway.app/api/tasks/category/'
     const tasks_api = 'https://task-on-production.up.railway.app/api/tasks'
@@ -23,7 +23,7 @@ const Tasks = () => {
     useEffect(()=>{
         axios.get(categories_api, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user.myToken}`
             }
         })
         .then(res=>{
@@ -40,14 +40,14 @@ const Tasks = () => {
         .catch(error=>{
             return;
         })
-    },[open,token, navigate])
+    },[open,user.myToken, navigate])
     useEffect(()=>{
         const filterTasks = (category) => {
             setMyFilteredTasks([])
             if(noCategory){
                 axios.get(tasks_api,{
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${user.myToken}`
                     }
                 })
                 .then(response=>{
@@ -68,7 +68,7 @@ const Tasks = () => {
             else{
                 axios.get(categoryTasks_api + category,{
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${user.myToken}`
                     }
                 })
                 .then(response=>{
@@ -89,7 +89,7 @@ const Tasks = () => {
             
         }
         filterTasks(myCategory)
-    },[myCategory, noCategory, token, navigate])
+    },[myCategory, noCategory, user.myToken, navigate])
     
     const handleOpen = () => {
         setOpen(!open)

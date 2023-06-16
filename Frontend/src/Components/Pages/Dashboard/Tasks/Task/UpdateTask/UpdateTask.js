@@ -9,7 +9,7 @@ import ValidateUpdateTask from './ValidateUpdateTask';
 import DeleteModal from './DeleteModal/DeleteModal';
 import React from 'react'
 const UpdateTask = () => {
-    const token = localStorage.getItem('myToken')
+    const user = JSON.parse(localStorage.getItem('user'))
     const editTask_api = 'https://task-on-production.up.railway.app/api/tasks/'
     const ctx = useContext(UpdateTaskContext)
     const navigate = useNavigate()
@@ -21,7 +21,7 @@ const UpdateTask = () => {
         const getMyTask = async () =>{ 
             await axios.get(editTask_api + id,{
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${user.myToken}`
                 }
             })
             .then(res=>{
@@ -65,7 +65,7 @@ const UpdateTask = () => {
         if(formErrors.all === ""){
             await axios.patch((ctx.update_api + id), {...updateData},{
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${user.myToken}`
                 }
             })
             .then(res=>{

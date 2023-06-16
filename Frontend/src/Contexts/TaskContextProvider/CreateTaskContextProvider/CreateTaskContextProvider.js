@@ -4,7 +4,7 @@ import ValidateCreateTask from "../../../Components/Pages/Create/CreateTask/Vali
 import CreateTaskContext from "./CreateTaskContext";
 
 const CreateTaskContextProvider = (props) => {
-    const token = localStorage.getItem('myToken')
+    const user = JSON.parse(localStorage.getItem('user'))
     const categories_api = 'https://task-on-production.up.railway.app/api/categories'
     const createTask_api = 'https://task-on-production.up.railway.app/api/tasks'
     
@@ -20,7 +20,7 @@ const CreateTaskContextProvider = (props) => {
     useEffect(()=>{
         axios.get(categories_api, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user.myToken}`
             }
         })
         .then(res=>{
@@ -33,7 +33,7 @@ const CreateTaskContextProvider = (props) => {
                 return
             }
         })
-    },[open, token])
+    },[open, user.myToken])
     const handleChange = (e) => {
         const {name, value} = e.target
         setFormData(prev=>{
@@ -72,7 +72,7 @@ const CreateTaskContextProvider = (props) => {
         if(formErrors.all === ""){
             await axios.post(createTask_api, {...createData},{
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${user.myToken}`
                 }
             })
             .then(res=>{
@@ -92,7 +92,7 @@ const CreateTaskContextProvider = (props) => {
                 }
             })
             .catch(error=>{
-                return
+                return error
             })
         }
         return success

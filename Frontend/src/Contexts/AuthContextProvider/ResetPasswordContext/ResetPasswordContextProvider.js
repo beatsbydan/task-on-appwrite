@@ -52,7 +52,7 @@ const ResetPasswordContextProvider = (props) => {
                 }
             })
             .catch(error=>{
-                return
+                return error
             })
         }
         return successes

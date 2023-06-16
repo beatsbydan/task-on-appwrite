@@ -1,34 +1,35 @@
 import axios from "axios";
-import {useState} from 'react'
 import ProfileContext from "./ProfileContext";
 const ProfileContextProvider = (props) => {
-    const token = localStorage.getItem('myToken')
+    const user = JSON.parse(localStorage.getItem('user'))
     const user_api = 'https://task-on-production.up.railway.app/api/users/'
-    const [userData, setUserData] = useState({})
     const getUser = async(id) =>{
-        axios.get(user_api + id, {
+        await axios.get(user_api + id, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user.myToken}`
             }
         })
         .then(res=>{
             if(res.status === 200){
                 const myData = res.data.data
-                setUserData({
+                const myUserData = {
                     email:myData.email,
                     firstname: myData.firstname,
                     lastname:myData.lastname,
-                    prfileImage: myData.profile_image
-                })
+                    profileImage: myData.profile_image
+                }
+                localStorage.setItem('userProps', JSON.stringify(myUserData))
             }
             else{
                 alert('SOMETHING WENT WRONG')
                 localStorage.clear()
             }
         })
+        .catch(err=>{
+            return err
+        })
     }
     const updatedContext ={
-        userData: userData,
         getUser: getUser
     }
     return ( 

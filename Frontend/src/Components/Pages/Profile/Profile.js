@@ -2,13 +2,13 @@ import Navbar from '../../Header/Navbar/Navbar';
 import {CgProfile} from 'react-icons/cg'
 import {MdEmail} from 'react-icons/md'
 import './Profile.css'
+import {useNavigate} from 'react-router-dom'
 import {useState} from 'react'
 import axios from 'axios';
 import ValidateProfile from './ValidateProfile';
 const Profile = () => {
-    const token = localStorage.getItem('myToken')
+    const navigate = useNavigate()
     const user = JSON.parse(localStorage.getItem('user'))
-    const myId = localStorage.getItem('myId')
     const uploadUrl = 'https://task-on-production.up.railway.app/api/users/update-profile/'
     const [myImage, setMyImage] = useState('')
     const [error, setError] = useState({})
@@ -17,24 +17,22 @@ const Profile = () => {
     }
     const handleUpload = async () =>{
         const fileError = ValidateProfile(myImage.name)
-        console.log(uploadUrl + myId)
         setError(fileError)
         if(fileError.all === ""){
             const data = {
                 profile_image: myImage,
                 firstname: user.firstname
             }
-            console.log(data)
-            axios.patch(uploadUrl + myId, {...data}, {
+            await axios.patch(uploadUrl + user.myId, {...data}, {
                 headers : {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${user.myToken}`,
                     "Content-Type": "multipart/form-data"
                 }
             })
             .then(res=>{
-                console.log(res.data.data.profile_image)
-                console.log(typeof(res.data.data.profile_image))
-                localStorage.setItem('profileImage', res.data.data.profile_image )
+                if(res.status === 200){
+                    navigate('/dashboard')
+                }
             })
             .catch(err=>{
                 console.log(err)
