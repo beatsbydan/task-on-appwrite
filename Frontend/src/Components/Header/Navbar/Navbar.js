@@ -14,6 +14,7 @@ const Navbar = () => {
     }
     const clear = () => {
         localStorage.clear()
+        localStorage.setItem('isLoggedIn', false)
     }
     return ( 
         <nav className='navbar'>
@@ -28,7 +29,7 @@ const Navbar = () => {
                         <li><Link onClick={clear} to={'/logout'}>Logout</Link></li>
                         <li>
                             <div className='profile'>
-                                <Link to={`/profile`}>{user.profileImage === null ? <BsPersonFillCheck size={30}/> : <img src={user.profileImage} alt =''/>}</Link>
+                                <Link to={`/profile`}>{user.profileImage === null ? <BsPersonFillCheck size={30}/> : <BsPersonFillCheck size={30}/>/*<img src={user.profileImage} alt =''/>*/ }</Link>
                             </div>
                         </li>
                     </ul>

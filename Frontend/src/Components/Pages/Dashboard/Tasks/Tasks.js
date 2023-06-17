@@ -7,6 +7,7 @@ import Categories from '../Categories/Categories.js';
 import { useNavigate } from 'react-router-dom';
 const Tasks = () => {
     const user = JSON.parse(localStorage.getItem('user'))
+    const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'))
     const categories_api = 'https://task-on-production.up.railway.app/api/categories'
     const categoryTasks_api = 'https://task-on-production.up.railway.app/api/tasks/category/'
     const tasks_api = 'https://task-on-production.up.railway.app/api/tasks'
@@ -21,12 +22,13 @@ const Tasks = () => {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     useEffect(()=>{
-        axios.get(categories_api, {
+        isLoggedIn && (axios.get(categories_api, {
             headers: {
                 'Authorization': `Bearer ${user.myToken}`
             }
         })
         .then(res=>{
+            console.log(res)
             if(res.status === 200){
                 setCategories(res.data.data)
                 setCategoryIsEmpty(false)
@@ -38,9 +40,9 @@ const Tasks = () => {
             }
         })
         .catch(error=>{
-            return;
-        })
-    },[open,user.myToken, navigate])
+            return error;
+        }))
+    },[open])
     useEffect(()=>{
         const filterTasks = (category) => {
             setMyFilteredTasks([])
@@ -62,7 +64,7 @@ const Tasks = () => {
                     }
                 })
                 .catch(error=>{
-                    return;
+                    return error;
                 })
             }
             else{
@@ -72,6 +74,7 @@ const Tasks = () => {
                     }
                 })
                 .then(response=>{
+                    console.log(response)
                     if(response.status === 200){
                         setMyFilteredTasks(response.data.data)
                         setMyFilteredTaskIsEmpty(false)
@@ -88,8 +91,8 @@ const Tasks = () => {
             }
             
         }
-        filterTasks(myCategory)
-    },[myCategory, noCategory, user.myToken, navigate])
+        isLoggedIn && filterTasks(myCategory)
+    },[myCategory, noCategory])
     
     const handleOpen = () => {
         setOpen(!open)

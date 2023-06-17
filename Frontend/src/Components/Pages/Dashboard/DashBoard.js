@@ -6,9 +6,10 @@ import React from 'react'
 import ProfileContext from '../../../Contexts/ProfileContextProvider/ProfileContext'
 const DashBoard = () => {
     const user = JSON.parse(localStorage.getItem('user'))
+    const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'))
     const ctx = useContext(ProfileContext)
     useEffect(()=>{
-        ctx.getUser(user.myId)
+        isLoggedIn && ctx.getUser(user.myId)
     },[])
     
     return ( 

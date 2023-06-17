@@ -29,7 +29,6 @@ const LogInContextProvider = (props) => {
                         email: '',
                         password: ''
                     })
-                    success.logInSuccess = true
                     const myData = res.data.data
                     const userData = {
                         email:myData.user.email,
@@ -39,7 +38,9 @@ const LogInContextProvider = (props) => {
                         myToken: myData.token,
                         myId: myData.user.$id
                     }
-                    localStorage.setItem('user', JSON.stringify(userData))
+                    localStorage.setItem('user', JSON.stringify(userData)) 
+                    localStorage.setItem('isLoggedIn', true)
+                    success.logInSuccess = true
                 }
                 if(res.status === 401){
                     success.logInSuccess = false

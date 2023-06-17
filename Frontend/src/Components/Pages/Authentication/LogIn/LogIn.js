@@ -11,7 +11,6 @@ const LogIn = () => {
     const navigate = useNavigate()
     const handleLogin = () => {
         ctx.handleSubmit().then(res=>{
-            console.log(res)
             if(res.logInSuccess === true){
                 navigate('/dashboard')
             }

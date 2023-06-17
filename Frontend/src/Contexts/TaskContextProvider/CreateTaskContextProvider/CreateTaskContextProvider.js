@@ -4,7 +4,8 @@ import ValidateCreateTask from "../../../Components/Pages/Create/CreateTask/Vali
 import CreateTaskContext from "./CreateTaskContext";
 
 const CreateTaskContextProvider = (props) => {
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem('user')) 
+    const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'))
     const categories_api = 'https://task-on-production.up.railway.app/api/categories'
     const createTask_api = 'https://task-on-production.up.railway.app/api/tasks'
     
@@ -18,12 +19,13 @@ const CreateTaskContextProvider = (props) => {
     })
     const [createTaskErrors, setCreateTaskErrors] = useState({})
     useEffect(()=>{
-        axios.get(categories_api, {
+        isLoggedIn && (axios.get(categories_api, {
             headers: {
                 'Authorization': `Bearer ${user.myToken}`
             }
         })
         .then(res=>{
+            console.log(res)
             if(res.status === 200){
                 setCategories(res.data.data)
             }
@@ -32,7 +34,7 @@ const CreateTaskContextProvider = (props) => {
             if(error.response.status === 400){
                 return
             }
-        })
+        }))
     },[open])
     const handleChange = (e) => {
         const {name, value} = e.target

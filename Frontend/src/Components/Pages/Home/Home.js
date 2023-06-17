@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import './Home.css'
-import React from 'react'
+import React, { useEffect } from 'react'
 const Home = () => {
+    useEffect(()=>{
+        localStorage.setItem('isLoggedIn', false)
+    },[])
     return ( 
         <React.Fragment>
             <section className='home'>
