@@ -9,7 +9,9 @@ const DashBoard = () => {
     const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'))
     const ctx = useContext(ProfileContext)
     useEffect(()=>{
-        isLoggedIn && ctx.getUser(user.myId)
+        if(isLoggedIn){
+            ctx.getUser(user.myId)
+        }
     },[])
     
     return ( 

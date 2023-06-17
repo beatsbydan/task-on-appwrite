@@ -22,7 +22,7 @@ const Tasks = () => {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     useEffect(()=>{
-        isLoggedIn && (axios.get(categories_api, {
+         (axios.get(categories_api, {
             headers: {
                 'Authorization': `Bearer ${user.myToken}`
             }
@@ -53,6 +53,7 @@ const Tasks = () => {
                     }
                 })
                 .then(response=>{
+                    console.log(response)
                     if(response.status === 200){
                         setTaskIsEmpty(false)
                         setMyTasks(response.data.data)
@@ -91,7 +92,7 @@ const Tasks = () => {
             }
             
         }
-        isLoggedIn && filterTasks(myCategory)
+         filterTasks(myCategory)
     },[myCategory, noCategory])
     
     const handleOpen = () => {
