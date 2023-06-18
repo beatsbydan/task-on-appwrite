@@ -3,7 +3,7 @@ import './Home.css'
 import React, { useEffect } from 'react'
 const Home = () => {
     useEffect(()=>{
-        localStorage.setItem('isLoggedIn', false)
+        localStorage.setItem('isLoggedIn', JSON.stringify(false))
     },[])
     return ( 
         <React.Fragment>

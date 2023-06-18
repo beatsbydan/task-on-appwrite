@@ -39,7 +39,7 @@ const LogInContextProvider = (props) => {
                         myId: myData.user.$id
                     }
                     localStorage.setItem('user', JSON.stringify(userData)) 
-                    localStorage.setItem('isLoggedIn', true)
+                    localStorage.setItem('isLoggedIn', JSON.stringify(true))
                     success.logInSuccess = true
                 }
                 if(res.status === 401){

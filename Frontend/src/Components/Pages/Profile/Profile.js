@@ -9,11 +9,41 @@ import ValidateProfile from './ValidateProfile';
 const Profile = () => {
     const navigate = useNavigate()
     const user = JSON.parse(localStorage.getItem('user'))
+    const user_api = 'https://task-on-production.up.railway.app/api/users/'
     const uploadUrl = 'https://task-on-production.up.railway.app/api/users/update-profile/'
     const [myImage, setMyImage] = useState('')
     const [error, setError] = useState({})
     const handleImage = (e) => {
         setMyImage(e.target.files[0])
+    }
+    const getUser = async() =>{
+        await axios.get(user_api + user.myId, {
+            headers: {
+                'Authorization': `Bearer ${user.myToken && user.myToken}`
+            }
+        })
+        .then(res=>{
+            console.log(res)
+            if(res.status === 200){
+                const myData = res.data.data
+                const myUserData = {
+                    email:user.email,
+                    firstname: user.firstname,
+                    lastname:user.lastname,
+                    myToken: user.myToken,
+                    myId: user.myId,
+                    profileImage: myData.user.profile_image
+                }
+                localStorage.setItem('user', JSON.stringify(myUserData))
+            }
+            else{
+                alert('SOMETHING WENT WRONG')
+                localStorage.clear()
+            }
+        })
+        .catch(err=>{
+            return err
+        })
     }
     const handleUpload = async () =>{
         const fileError = ValidateProfile(myImage.name)
@@ -31,13 +61,13 @@ const Profile = () => {
             })
             .then(res=>{
                 if(res.status === 200){
+                    getUser()
                     navigate('/dashboard')
                 }
             })
             .catch(err=>{
                 console.log(err)
             })
-            console.log('Valid')
         }
     }
     return ( 

@@ -14,7 +14,7 @@ const Navbar = () => {
     }
     const clear = () => {
         localStorage.clear()
-        localStorage.setItem('isLoggedIn', false)
+        localStorage.setItem('isLoggedIn', JSON.stringify(false))
     }
     return ( 
         <nav className='navbar'>
